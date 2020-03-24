@@ -40,27 +40,23 @@ class LockSite_Plugin implements Typecho_Plugin_Interface
 	 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
         <title><?php echo htmlspecialchars(Typecho_Widget::widget('Widget_Options')->plugin('LockSite')->str_word)?></title>
         <style>
-            html {padding: 50px 10px;font-size: 16px;line-height: 1.4;color: #666;background: #F6F6F3;}
+            html {padding: 50px 10px;font-size: 16px;line-height: 1.5;color: #666;background: #F6F6F3;}
             html,input { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
             body {max-width: 500px;_width: 500px;padding: 30px 20px;margin: 0 auto;background: #FFF;}
-            ul {padding: 0 0 0 40px;}
-            .container {max-width: 380px;_width: 380px;margin: 0 auto;}
-            .passwd_form,p{text-align: center;}.logo1{width:200px;height: 200px;margin:auto;display: block;}
-            .pass_input{padding:4px 5px;border:1px solid #bbb;border-radius:2px;}
+            .pass_form,p{text-align: center;}.logo1{width:200px;height: 200px;margin:auto;display: block;}
+            .pass_input{padding:4px 5px;border:1px solid #bbb;border-radius:2px;font-size: 12px;}
             .pass_button{border:1px solid #bbb;padding:2px 7px;background: #532e17;color:#fff;border-radius: 3px;cursor: pointer;}
         </style>
     </head><body>
-        <div class="container">
         <img class="logo1" src=" <?php echo htmlspecialchars(Typecho_Widget::widget('Widget_Options')->plugin('LockSite')->url_pic)?>" />
         <br>
            <p><?php echo Typecho_Widget::widget('Widget_Options')->plugin('LockSite')->str_word?></p>
            <p style="color:red"><?php echo $Str_Msg_PSWERR;?></p>
-           <form class="passwd_form" action="<?php echo $_SERVER["REQUEST_URI"];?>" method="post" >
+           <form class="pass_form" action="<?php echo $_SERVER["REQUEST_URI"];?>" method="post" >
            <input class="pass_input" type="password"   name="index_passwd" placeholder="<?php echo htmlspecialchars(Typecho_Widget::widget('Widget_Options')->plugin('LockSite')->placeholder)?>" /> 
            <input class="pass_button" type="submit" value="<?php echo htmlspecialchars(Typecho_Widget::widget('Widget_Options')->plugin('LockSite')->Submit)?>">
            </form>
-        </div>
-        </body></html>
+    </body></html>
 	 <?php
 	 //停止输出其他内容
 	 exit();
@@ -102,9 +98,6 @@ class LockSite_Plugin implements Typecho_Plugin_Interface
 		
 		$str_Pword = new Typecho_Widget_Helper_Form_Element_Text('str_Pword', NULL, '123456',_t('设置全站访问密码'));
         $form->addInput($str_Pword);
-			
-		//$enable_in_html = new Typecho_Widget_Helper_Form_Element_Radio('enable_in_html', array ('0' => '加密后内容依旧可以在html和搜索引擎中可见', '1' => '彻底隐藏数据'), '0',        '是否完全隐藏内容：', '');
-   // $form->addInput($enable_in_html);
     }
     
     /**
