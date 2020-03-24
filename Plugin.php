@@ -20,32 +20,21 @@ class LockSite_Plugin implements Typecho_Plugin_Interface
     public static function activate()
     {
         Typecho_Plugin::factory('admin/menu.php')->navBar = array('LockSite_Plugin', 'render');
-
-
-	
 		Typecho_Plugin::factory('Widget_Archive')->headerOptions =array('LockSite_Plugin', 'main_fun');
-	
-	
-	
     }
 
 	public static function main_fun()
     {
-		
 		$Str_Msg_PSWERR="";
 		//检查密码 处理 cookies
 		if ( isset($_POST['index_passwd']) ){
-			
 			if ( trim($_POST['index_passwd'])==  Typecho_Widget::widget('Widget_Options')->plugin('LockSite')->str_Pword  ){
-				
 				setcookie("index_passwd",trim($_POST['index_passwd']),time()+3600*24*7);
-	
 				echo '<meta http-equiv="refresh" content="0;url='.$_SERVER["REQUEST_URI"].'"> ';
 			}else{
 				$Str_Msg_PSWERR="密码错误，请重新输入";
 			}
 		}
-		
 		if(empty($_COOKIE["index_passwd"])){
      ?>
 	 <!DOCTYPE html><html lang="en"><head><meta charset="UTF-8">
@@ -54,7 +43,6 @@ class LockSite_Plugin implements Typecho_Plugin_Interface
             html {padding: 50px 10px;font-size: 16px;line-height: 1.4;color: #666;background: #F6F6F3;}
             html,input { font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
             body {max-width: 500px;_width: 500px;padding: 30px 20px;margin: 0 auto;background: #FFF;}
-
             ul {padding: 0 0 0 40px;}
             .container {max-width: 380px;_width: 380px;margin: 0 auto;}
             .passwd_form,p{text-align: center;}.logo1{width:200px;height: 200px;margin:auto;display: block;}
@@ -67,10 +55,8 @@ class LockSite_Plugin implements Typecho_Plugin_Interface
         <br>
            <p><?php echo Typecho_Widget::widget('Widget_Options')->plugin('LockSite')->str_word?></p>
            <p style="color:red"><?php echo $Str_Msg_PSWERR;?></p>
-
            <form class="passwd_form" action="<?php echo $_SERVER["REQUEST_URI"];?>" method="post" >
            <input class="pass_input" type="password"   name="index_passwd" placeholder="<?php echo htmlspecialchars(Typecho_Widget::widget('Widget_Options')->plugin('LockSite')->placeholder)?>" /> 
-           
            <input class="pass_button" type="submit" value="<?php echo htmlspecialchars(Typecho_Widget::widget('Widget_Options')->plugin('LockSite')->Submit)?>">
            </form>
         </div>
@@ -78,16 +64,10 @@ class LockSite_Plugin implements Typecho_Plugin_Interface
 	 <?php
 	 //停止输出其他内容
 	 exit();
-	 
 	 }else{
 		//密码存在 什么都不做
 	}	
-	 
-	 
 	}
-	
-	
-	
     /**
      * 禁用插件方法,如果禁用失败,直接抛出异常
      * 
@@ -111,10 +91,8 @@ class LockSite_Plugin implements Typecho_Plugin_Interface
         $str_word = new Typecho_Widget_Helper_Form_Element_Text('str_word', NULL, '网站已启用全站加密，请输入密码访问', _t('提示文字'));
         $form->addInput($str_word);
 		
-		
 		$placeholder = new Typecho_Widget_Helper_Form_Element_Text('placeholder', NULL, '请输入访问权限密码', _t('输入框提示'));
         $form->addInput($placeholder);
-		
 		
 		$Submit = new Typecho_Widget_Helper_Form_Element_Text('Submit', NULL, '提交', _t('Submit按钮提示'));
         $form->addInput($Submit);
@@ -148,7 +126,4 @@ class LockSite_Plugin implements Typecho_Plugin_Interface
     {
         echo '<a href="options-plugin.php?config=LockSite">全站密码</a>';
     }
-	
-	
-	
 }
